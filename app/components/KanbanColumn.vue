@@ -9,14 +9,14 @@
         <div class="p-3">
 
             <!-- Header -->
-            <div class="text-white text-sm font-semibold">
-                <h2 class="mb-4 text-lg font-bold text-white">
+            <div class="text-white text-sm font-semibold m-1 mb-3">
+                <h2 class="text-lg font-bold text-white">
                    {{ title }}
                 </h2>
             </div>
 
             <!-- body -->
-            <div class="bg-gray-700 rounded-lg p-2 cursor-pointer hover:bg-gray-800">
+            <div class="bg-white/20 rounded-lg p-2 cursor-pointer hover:bg-gray-800">
                 <KanbanCard text="teste"/>
             </div>
 
