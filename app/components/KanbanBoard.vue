@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref } from 'vue'
 
-    const { columns, addCard } = useKanban()
+    const { columns, addCard, removeCard } = useKanban()
 
     const openColumnId = ref<string | null>(null)
 
@@ -12,6 +12,9 @@
     function handleAddCard(columnId: string, text: string) {
         addCard(columnId, text)
         openColumnId.value = null
+}
+    function removeColumnCard(columnId: string, cardId: number) {
+        removeCard(columnId, cardId)
 }
 
 </script>
@@ -30,6 +33,7 @@
                 :show-input="openColumnId === column.id"
                 @open-add-card="openAddCard(column.id)"
                 @add-card="handleAddCard(column.id, $event)"
+                @delete-card="removeColumnCard(column.id, $event)"
             />
         </div>
     </div>

@@ -11,6 +11,7 @@
     const emit = defineEmits<{
         addCard: [text: string]
         openAddCard: []
+        deleteCard: [cardId: number]
     }>()
 
     function handleAddCard(text: string) {
@@ -19,6 +20,10 @@
 
     function handleOpenAddCard() {
         emit('openAddCard')
+    }
+
+    function handleDeleteCard (cardId: number) {
+        emit('deleteCard', cardId)
     }
 </script>
 
@@ -41,8 +46,10 @@
             >
                 <template #item="{ element }">
                     <KanbanCard 
+                        :id="element.id"
                         :text="element.text"
                         class="my-2"
+                        @delete="handleDeleteCard(element.id)"
                     />
                 </template>
             </draggable>
