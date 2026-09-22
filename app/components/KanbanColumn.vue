@@ -1,28 +1,58 @@
 <script setup lang="ts">
+    import type { Card } from '~/composables/useKanban';
+    import draggable from 'vuedraggable'
+
     defineProps<{
         title: string
+        cards: Card[]
+        showInput: boolean
     }>()
+
+    const emit = defineEmits<{
+        addCard: [text: string]
+        openAddCard: []
+    }>()
+
+    function handleAddCard(text: string) {
+        emit('addCard', text)
+    }
+
+    function handleOpenAddCard() {
+        emit('openAddCard')
+    }
 </script>
 
 <template>
     <div class="w-[500px] min-w-[280px] max-w-[500px] bg-black rounded-xl">
         <div class="p-3">
-
-            <!-- Header -->
             <div class="text-white text-sm font-semibold m-1 mb-3">
                 <h2 class="text-lg font-bold text-white">
                    {{ title }}
                 </h2>
             </div>
 
-            <!-- body -->
-            <div class="bg-white/20 rounded-lg p-2 cursor-pointer hover:bg-gray-800">
-                <KanbanCard text="teste"/>
-            </div>
+            <draggable
+                :list="cards"
+                group="kanban"
+                item-key="id"
+                animation="200"
+                ghost-class="opacity-50"
+                class="min-h-full"
+            >
+                <template #item="{ element }">
+                    <KanbanCard 
+                        :text="element.text"
+                        class="my-2"
+                    />
+                </template>
+            </draggable>
 
-            <!-- Bottom -->
             <div class="mt-3">
-                <KanbanAddCard />
+                <KanbanAddCard
+                    :show-input="showInput"
+                    @open="handleOpenAddCard" 
+                    @add="handleAddCard"
+                />
             </div>
         </div>
     </div>
