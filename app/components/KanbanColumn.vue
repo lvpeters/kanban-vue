@@ -12,6 +12,7 @@
         addCard: [text: string]
         openAddCard: []
         deleteCard: [cardId: number]
+        editCard: [cardId: number, text: string]
     }>()
 
     function handleAddCard(text: string) {
@@ -24,6 +25,9 @@
 
     function handleDeleteCard (cardId: number) {
         emit('deleteCard', cardId)
+    }
+    function handleEditCard (cardId: number, text: string) {
+        emit('editCard', cardId, text)
     }
 </script>
 
@@ -41,15 +45,15 @@
                 group="kanban"
                 item-key="id"
                 animation="200"
-                ghost-class="opacity-50"
-                class="min-h-full"
+                ghost-class="kanban-ghost"
             >
                 <template #item="{ element }">
                     <KanbanCard 
-                        :id="element.id"
+                        :id="element.id" 
                         :text="element.text"
                         class="my-2"
                         @delete="handleDeleteCard(element.id)"
+                        @edit-card="(cardId, text) => handleEditCard(cardId, text)"
                     />
                 </template>
             </draggable>

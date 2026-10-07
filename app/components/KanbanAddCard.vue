@@ -27,8 +27,10 @@
     <template v-if="showInput">
       <UInput
         v-model="text"
-        placeholder="Digite o nome do cartão"
-        class="w-full"
+        placeholder="Digite o nome do cartão..."
+        variant="none"
+        class="w-full py-1 rounded-md bg-white/10 focus-within:bg-white/15 
+        focus-within:ring-2 focus-within:ring-white/30"
       />
 
       <UButton
@@ -38,7 +40,7 @@
         @click="addCard()"
       />
     </template>
-
+ 
     <template v-if="!showInput">
       <UButton
         icon="i-lucide-plus"

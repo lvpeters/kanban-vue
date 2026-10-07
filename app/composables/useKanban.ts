@@ -61,10 +61,27 @@ export function useKanban () {
             return
 
         column.cards.splice(cardIndex, 1)
-    }    
+    }
+    function editCard(columnId: string, cardId: number, text: string) {
+        const column = columns.value.find(
+            column => column.id === columnId
+        )
+        if(!column)
+            return
+
+        const cardIndex = column.cards.findIndex(
+            card => card.id === cardId
+        )
+
+        if(cardIndex === -1)
+            return
+
+        column.cards[cardIndex].text = text
+    }
     return{
         columns,
         addCard,
-        removeCard
+        removeCard,
+        editCard
     }
 }
