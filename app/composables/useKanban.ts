@@ -34,6 +34,7 @@ export function useKanban () {
             cards: []
         }
     ])
+
     function addCard(columnId: string, text: string) {
         const column = columns.value.find(
             column => column.id === columnId
@@ -46,6 +47,7 @@ export function useKanban () {
             text
         })
     }
+
     function removeCard(columnId: string, cardId: number) {
         const column = columns.value.find(
             column => column.id === columnId
@@ -62,6 +64,7 @@ export function useKanban () {
 
         column.cards.splice(cardIndex, 1)
     }
+
     function editCard(columnId: string, cardId: number, text: string) {
         const column = columns.value.find(
             column => column.id === columnId

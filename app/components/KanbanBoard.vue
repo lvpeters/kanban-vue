@@ -1,5 +1,13 @@
 <script setup lang="ts">
     import { ref } from 'vue'
+    import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
+
+    const ConfirmationDialogModal = ref(false)
+
+    const cardToDelete = ref<{
+        columnId: string
+        cardId: number
+    } | null>(null)
 
     const { columns, addCard, removeCard, editCard } = useKanban()
 
@@ -9,16 +17,40 @@
         openColumnId.value = columnId
     }
 
+    function handleConfirmationDialog(confirmed: boolean){
+        if(!confirmed){
+            ConfirmationDialogModal.value = false
+            cardToDelete.value = null
+            return
+        }
+
+        if(!cardToDelete.value)
+            return
+
+        removeCard(
+            cardToDelete.value.columnId,
+            cardToDelete.value.cardId
+        )
+        ConfirmationDialogModal.value = false
+        cardToDelete.value = null
+    }
+
     function handleAddCard(columnId: string, text: string) {
         addCard(columnId, text)
         openColumnId.value = null
 }
     function removeColumnCard(columnId: string, cardId: number) {
-        removeCard(columnId, cardId)
+        cardToDelete.value = {
+            columnId,
+            cardId
+        }
+        ConfirmationDialogModal.value = true
 }
     function editColumnCard(columnId: string, cardId: number, text: string) {
         editCard(columnId, cardId, text)
 }
+
+
 
 </script>
 
@@ -40,5 +72,11 @@
                 @edit-card="(cardId, text) => editColumnCard(column.id, cardId, text)"
             />
         </div>
+        <ConfirmationDialog
+            :open="ConfirmationDialogModal"
+            title="Excluir card?"
+            description="Tem certeza que deseja excluir esse card?"
+            @close="handleConfirmationDialog"
+        />
     </div>
 </template>

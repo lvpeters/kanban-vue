@@ -15,8 +15,6 @@
 
     const editando = ref(false)
 
-    const saveBtn = ref(false)
-
     function startEdition(){
         editando.value = true
         novoTexto.value = props.text
@@ -70,7 +68,7 @@
                 />
             </UDropdownMenu>
             <UButton
-                v-if="novoTexto.trim().length > 0"
+                v-if="editando"
                 icon="i-lucide-check"
                 variant="soft"
                 color="success"
